@@ -1,0 +1,48 @@
+<div class="container">
+  <h1 class="my-2">Dashboard Proyectos</h1>
+
+  <%= link_to 'Crear nuevo proyecto', new_proyect_path, class: "btn btn-primary my-2" %>
+
+  <div class="row">
+    <div class="col-md-3 offset-md-2">
+      <%= search_form_for @q do |f| %>
+        <div class="form-group">
+          <%= f.label :name_or_description_cont %>
+          <%= f.search_field :name_or_description_cont, class: "formcontrol", placeholder: "Search text" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :status_eq, "Status" %>
+          <%= f.select :status_eq, options_for_select(Proyect.statuses ,
+          @q.status_eq), {},{class: "form-control"} %>
+        </div>
+        <%= f.submit "Search", class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+
+  <table class="table my-2">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Initial Date</th>
+        <th scope="col">Final Date</th>
+        <th scope="col">State</th>
+        <th scope="col">Updated</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @proyects.each do |proyect| %>
+      <tr>
+        <td><%= proyect.name %></td>
+        <td><%= proyect.description %></td>
+        <td><%= proyect.initial_date %></td>
+        <td><%= proyect.final_date %></td>
+        <td><%= proyect.status %></td>
+        <td><%= proyect.updated_at %></td>
+        <td><%= link_to 'Update', edit_proyect_path(proyect), class:"btn btn-warning" %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
